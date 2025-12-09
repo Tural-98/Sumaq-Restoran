@@ -1,0 +1,654 @@
+﻿<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumaq Restoranı - İsmayıllı</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #8B0000;
+            --secondary-color: #F5DEB3;
+            --accent-color: #228B22;
+            --text-color: #333;
+            --light-bg: #FFF8DC;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --border-radius: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 5px solid var(--primary-color);
+        }
+
+        .restaurant-name {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .restaurant-location {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #ddd;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .menu-categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 1rem;
+        }
+
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .category-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .category-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .menu-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .menu-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .section-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: var(--primary-color);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .menu-item {
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
+            padding: 1.2rem;
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--text-color);
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+
+        .item-description {
+            color: #666;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .special-badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-text {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-icon {
+            color: var(--secondary-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .restaurant-name {
+                font-size: 2.2rem;
+            }
+            
+            .restaurant-location {
+                font-size: 1.1rem;
+            }
+            
+            .category-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .menu-section {
+                padding: 1.5rem;
+            }
+            
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .restaurant-name {
+                font-size: 1.8rem;
+            }
+            
+            .menu-categories {
+                gap: 0.5rem;
+            }
+            
+            .category-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="restaurant-name">Sumaq Restoranı</h1>
+            <p class="restaurant-location">İsmayıllı rayonu</p>
+            <p>Ənənəvi Azərbaycan mətbəxinin ən dadlı nümunələri</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="menu-categories" id="category-buttons">
+            <!-- Categories will be generated by JavaScript -->
+        </div>
+
+        <div id="menu-sections">
+            <!-- Səhər Yeməyi -->
+            <section class="menu-section" id="sehər-yemeyi">
+                <div class="section-header">
+                    <i class="fas fa-utensils section-icon"></i>
+                    <h2 class="section-title">Səhər Yeməyi</h2>
+                </div>
+                <div class="menu-items">
+                    <!-- Items will be generated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Soyuq İçkilər -->
+            <section class="menu-section" id="soyuq-ickiler">
+                <div class="section-header">
+                    <i class="fas fa-glass-whiskey section-icon"></i>
+                    <h2 class="section-title">Soyuq İçkilər</h2>
+                </div>
+                <div class="menu-items">
+                    <!-- Items will be generated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Spirtli İçkilər -->
+            <section class="menu-section" id="spirtli-ickiler">
+                <div class="section-header">
+                    <i class="fas fa-wine-glass-alt section-icon"></i>
+                    <h2 class="section-title">Spirtli İçkilər</h2>
+                </div>
+                <div class="menu-items">
+                    <!-- Items will be generated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Çay Seti -->
+            <section class="menu-section" id="cay-seti">
+                <div class="section-header">
+                    <i class="fas fa-mug-hot section-icon"></i>
+                    <h2 class="section-title">Çay Seti</h2>
+                </div>
+                <div class="menu-items">
+                    <!-- Items will be generated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Salatlar -->
+            <section class="menu-section" id="salatlar">
+                <div class="section-header">
+                    <i class="fas fa-leaf section-icon"></i>
+                    <h2 class="section-title">Salatlar</h2>
+                </div>
+                <div class="menu-items">
+                    <!-- Items will be generated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Sulu Yeməklər -->
+            <section class="menu-section" id="sulu-yemekler">
+                <div class="section-header">
+                    <i class="fas fa-utensil-spoon section-icon"></i>
+                    <h2 class="section-title">Sulu Yeməklər</h2>
+                </div>
+                <div class="menu-items">
+                    <!-- Items will be generated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- İsti yeməklər (Qazan yeməkləri) -->
+            <section class="menu-section" id="isti-yemekler">
+                <div class="section-header">
+                    <i class="fas fa-fire section-icon"></i>
+                    <h2 class="section-title">İsti Yeməklər</h2>
+                </div>
+                <div class="menu-items">
+                    <!-- Items will be generated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Kabablar -->
+            <section class="menu-section" id="kabablar">
+                <div class="section-header">
+                    <i class="fas fa-drumstick-bite section-icon"></i>
+                    <h2 class="section-title">Kabablar</h2>
+                </div>
+                <div class="menu-items">
+                    <!-- Items will be generated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Sac Yeməkləri -->
+            <section class="menu-section" id="sac-yemekleri">
+                <div class="section-header">
+                    <i class="fas fa-temperature-high section-icon"></i>
+                    <h2 class="section-title">Sac Yeməkləri</h2>
+                </div>
+                <div class="menu-items">
+                    <!-- Items will be generated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Təndir Yeməkləri -->
+            <section class="menu-section" id="tendir-yemekleri">
+                <div class="section-header">
+                    <i class="fas fa-fire-alt section-icon"></i>
+                    <h2 class="section-title">Təndir Yeməkləri</h2>
+                </div>
+                <div class="menu-items">
+                    <!-- Items will be generated by JavaScript -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p class="footer-text">Sumaq Restoranına xoş gəlmisiniz!</p>
+            <p>Dadlı yeməklərimiz və isti qonaqpərvərliyimizlə sizi gözləyirik</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt contact-icon"></i>
+                    <span>İsmayıllı rayonu</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone contact-icon"></i>
+                    <span>(+994) XX XXX XX XX</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock contact-icon"></i>
+                    <span>Hər gün 10:00 - 23:00</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu data organized by category
+        const menuData = {
+            "sehər-yemeyi": [
+                { name: "Nərə Yağı", price: "5 AZN" },
+                { name: "Sadə Yağ", price: "4 AZN" },
+                { name: "Assorti Pendir", price: "5 AZN" },
+                { name: "Şor", price: "3 AZN" },
+                { name: "Süzmə", price: "3 AZN" },
+                { name: "Qaymaq", price: "5 AZN" },
+                { name: "Doşab - Bəkməz", price: "5 AZN" },
+                { name: "Bal", price: "6 AZN" },
+                { name: "Zeytun", price: "3 AZN" },
+                { name: "Süd", price: "2 AZN" },
+                { name: "Sosiska (2 ədəd)", price: "3 AZN" },
+                { name: "Soyutma Yumurta", price: "1 AZN" },
+                { name: "Pomidor Yumurta", price: "5 AZN" },
+                { name: "Qayğanaq Yumurta", price: "3 AZN" },
+                { name: "Qlazok Yumurta", price: "3 AZN" },
+                { name: "Sosika Yumurta", price: "6 AZN" },
+                { name: "Kükü", price: "4 AZN" },
+                { name: "Qırmızı İkra (50 qr)", price: "18 AZN" },
+                { name: "Hissə Verilmiş Qızılbalıq (100 qr)", price: "14 AZN" }
+            ],
+            "soyuq-ickiler": [
+                { name: "İtburnu", price: "3 AZN" },
+                { name: "Qaraqat", price: "3 AZN" },
+                { name: "Tomat", price: "3 AZN" },
+                { name: "Kompot", price: "4 AZN" },
+                { name: "Limonad", price: "3 AZN" },
+                { name: "Qazlı Su", price: "2 AZN" },
+                { name: "Qazsız Su", price: "2 AZN" },
+                { name: "Mineral Sular", price: "3 AZN" },
+                { name: "Cola / Fanta / Sprite", price: "3 AZN" },
+                { name: "Bizon", price: "3 AZN" },
+                { name: "Ice Tea", price: "3 AZN" },
+                { name: "Meyvə Şirəsi", price: "4 AZN" },
+                { name: "Ayran / Doğramac", price: "5 AZN" }
+            ],
+            "spirtli-ickiler": [
+                { name: "Pivə NZS", price: "4 AZN" },
+                { name: "Pivə Xirdalan", price: "4 AZN" },
+                { name: "Pivə Efes", price: "6 AZN" },
+                { name: "Pivə Heineken", price: "6 AZN" },
+                { name: "Pivə Baltika 0", price: "5 AZN" },
+                { name: "Çaxır Savalan", price: "30 AZN" },
+                { name: "Çaxır Chabiant", price: "30 AZN" },
+                { name: "Araqlar", price: "0 AZN", description: "Qiymət dəyişir" },
+                { name: "Konyak", price: "0 AZN", description: "Qiymət dəyişir" },
+                { name: "Tekila", price: "0 AZN", description: "Qiymət dəyişir" },
+                { name: "Viski", price: "0 AZN", description: "Qiymət dəyişirl" },
+                { name: "Prosecco", price: "0 AZN", description: "Qiymət dəyişir" }
+            ],
+            "cay-seti": [
+                { name: "Çay", price: "5 AZN" },
+                { name: "Samovar Çayı", price: "25 AZN" },
+                { name: "Çay Dəstgahı", price: "40 AZN" }
+            ],
+            "salatlar": [
+                { name: "Pomidor Xiyar", price: "5 AZN" },
+                { name: "Göyərti", price: "3 AZN" },
+                { name: "Assorti Pendir", price: "5 AZN" },
+                { name: "Acıka/Əzmə", price: "3 AZN" },
+                { name: "Şor/Süzmə", price: "3 AZN" },
+                { name: "Assorti Turşu", price: "5 AZN" },
+                { name: "Xiyar Turşu", price: "3 AZN" },
+                { name: "Döyməc / Çiy Dovğa", price: "3 AZN" },
+                { name: "Zeytun", price: "3 AZN" },
+                { name: "Limon", price: "1 AZN" },
+                { name: "Nar", price: "2 AZN" },
+                { name: "Qatıq", price: "2 AZN" },
+                { name: "Leço", price: "4 AZN" },
+                { name: "Manqal Salatı", price: "4 AZN" },
+                { name: "Çoban Salatı", price: "5 AZN" },
+                { name: "Baliq Konserva", price: "5 AZN" },
+                { name: "Assorti Meyvə", price: "15 AZN" }
+            ],
+            "sulu-yemekler": [
+                { name: "Düşbərə", price: "5 AZN" },
+                { name: "Çolpa", price: "4 AZN" },
+                { name: "Mərci", price: "3 AZN" },
+                { name: "Hinduşka", price: "4 AZN" },
+                { name: "Tərəvəz", price: "3 AZN" }
+            ],
+            "isti-yemekler": [
+                { name: "Quzu Buğlama", price: "10 AZN" },
+                { name: "Dana Buğlama", price: "10 AZN" },
+                { name: "Ev Sayaxı Tuşonka", price: "10 AZN" },
+                { name: "Can Əti Şabalıdlı", price: "12 AZN" },
+                { name: "Can Əti Turşulu", price: "10 AZN" },
+                { name: "Can Əti Qaymaqlı", price: "11 AZN" },
+                { name: "Can Əti İspanaqlı", price: "10 AZN" },
+                { name: "Quzu Maçası Turşulu", price: "10 AZN" },
+                { name: "Qaz Əti Turşulu", price: "10 AZN" },
+                { name: "Quzu Əti Şabalıdlı", price: "12 AZN" },
+                { name: "Hinduşka Şabalıdlı", price: "15 AZN" },
+                { name: "Bakı Çığırtması", price: "25 AZN" },
+                { name: "Qəbələ Çığırtması", price: "22 AZN" },
+                { name: "Çolpa Qaymaqlı", price: "20 AZN" },
+                { name: "Çolpa Turşulu", price: "20 AZN" },
+                { name: "Çolpa Şabalıdlı", price: "25 AZN" },
+                { name: "Çoban Qovurma", price: "10 AZN" },
+                { name: "Kefli Beçə", price: "20 AZN" },
+                { name: "Çolpa Tabaka", price: "20 AZN" }
+            ],
+            "kabablar": [
+                { name: "Lülə (Quzu)", price: "10 AZN" },
+                { name: "Tikə (Quzu)", price: "10 AZN" },
+                { name: "Basdırma (Quzu) Xüsusi", price: "10 AZN", special: true },
+                { name: "Basdırma (Dana)", price: "10 AZN" },
+                { name: "Antrikot (Quzu)", price: "12 AZN" },
+                { name: "Şpalaq (Dana)", price: "15 AZN" },
+                { name: "İçalat (Quzu)", price: "9 AZN" },
+                { name: "Toyuq", price: "6 AZN" },
+                { name: "Semiçka", price: "10 AZN" },
+                { name: "Hinduşka", price: "12 AZN" },
+                { name: "Kartof Lülə", price: "3 AZN" },
+                { name: "Kartof Quyruq", price: "5 AZN" },
+                { name: "Külləmə Kartof", price: "3 AZN" },
+                { name: "Badimcan/Pomidor/Bibər", price: "1 AZN" },
+                { name: "Çolpa Bütöv (Setka) Xüsusi", price: "20 AZN", special: true }
+            ],
+            "sac-yemekleri": [
+                { name: "Çolpa Bütöv", price: "25 AZN" },
+                { name: "Quzu 3 Nəfərlik", price: "35 AZN" },
+                { name: "Dana 3 Nəfərlik", price: "36 AZN" },
+                { name: "Qarışıq 3 Nəfərlik", price: "30 AZN" }
+            ],
+            "tendir-yemekleri": [
+                { name: "Quzu Səbəti", price: "75 AZN" },
+                { name: "Quzu Qolu", price: "35 AZN" },
+                { name: "Quzu Budu", price: "55 AZN" },
+                { name: "Çolpa", price: "25 AZN" },
+                { name: "Şpalaq", price: "12 AZN" },
+                { name: "Təndir Kababı", price: "12 AZN" },
+                { name: "Hinduşka", price: "40 AZN" },
+                { name: "Dana Quyruq", price: "25 AZN" },
+                { name: "Quzu Bütöv", price: "280 AZN" }
+            ]
+        };
+
+        // Category names for display and buttons
+        const categoryNames = {
+            "sehər-yemeyi": "Səhər Yeməyi",
+            "soyuq-ickiler": "Soyuq İçkilər",
+            "spirtli-ickiler": "Spirtli İçkilər",
+            "cay-seti": "Çay Seti",
+            "salatlar": "Salatlar",
+            "sulu-yemekler": "Sulu Yeməklər",
+            "isti-yemekler": "İsti Yeməklər",
+            "kabablar": "Kabablar",
+            "sac-yemekleri": "Sac Yeməkləri",
+            "tendir-yemekleri": "Təndir Yeməkləri"
+        };
+
+        // Initialize the menu
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create category buttons
+            const categoryButtonsContainer = document.getElementById('category-buttons');
+            
+            for (const categoryId in categoryNames) {
+                const button = document.createElement('button');
+                button.className = 'category-btn';
+                button.dataset.category = categoryId;
+                button.textContent = categoryNames[categoryId];
+                
+                // Set first button as active
+                if (categoryId === 'sehər-yemeyi') {
+                    button.classList.add('active');
+                }
+                
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.category-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Show the selected category
+                    showCategory(categoryId);
+                });
+                
+                categoryButtonsContainer.appendChild(button);
+            }
+            
+            // Populate menu items for each category
+            for (const categoryId in menuData) {
+                const categorySection = document.getElementById(categoryId);
+                const menuItemsContainer = categorySection.querySelector('.menu-items');
+                
+                menuData[categoryId].forEach(item => {
+                    const menuItem = document.createElement('div');
+                    menuItem.className = 'menu-item';
+                    
+                    let itemHTML = `
+                        <div class="item-header">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-price">${item.price}</div>
+                        </div>
+                    `;
+                    
+                    if (item.description) {
+                        itemHTML += `<div class="item-description">${item.description}</div>`;
+                    }
+                    
+                    if (item.special) {
+                        itemHTML += `<div class="special-badge">Xüsusi</div>`;
+                    }
+                    
+                    menuItem.innerHTML = itemHTML;
+                    menuItemsContainer.appendChild(menuItem);
+                });
+            }
+            
+            // Show the first category by default
+            showCategory('sehər-yemeyi');
+        });
+
+        // Function to show selected category
+        function showCategory(categoryId) {
+            // Hide all menu sections
+            document.querySelectorAll('.menu-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show the selected category
+            document.getElementById(categoryId).classList.add('active');
+            
+            // Scroll to the category
+            document.getElementById(categoryId).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    </script>
+</body>
+</html>
